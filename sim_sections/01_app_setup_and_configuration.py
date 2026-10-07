@@ -1030,18 +1030,17 @@ loadPrcFileData("", f'model-cache-dir "{PROJECT_ROOT / ".panda3d-cache"}"')
 
 
 def asset_path(relative_path):
+    from panda3d.core import Filename
     local_path = PROJECT_ROOT / relative_path
     if local_path.exists():
-        return str(local_path).replace(chr(92),chr(47))
-    return str(FOREST_SIM_ROOT / relative_path).replace(chr(92),chr(47))
+        return Filename.fromOsSpecific(str(local_path)).getFullpath()
+    return Filename.fromOsSpecific(str(FOREST_SIM_ROOT / relative_path)).getFullpath()
 
 
 # ---------
 # App setup
 # ---------
 app = ShowBase()  #create 3D program window and sets up the engine
-app.getModelPath().prependDirectory(str(PROJECT_ROOT))
-app.getModelPath().prependDirectory(str(PROJECT_ROOT / "models"))
 app.disableMouse()  #panda has a defualt ca,era controlled, this turns it off
 app.setBackgroundColor(*DEFAULT_BACKGROUND_COLOR)  #set color
 alarm_sound = None
