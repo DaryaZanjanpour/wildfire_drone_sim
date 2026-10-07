@@ -1246,7 +1246,8 @@ def load_baked_fire_textures():
 
     loaded_textures = []
     for frame_path in frame_paths:
-        texture = app.loader.loadTexture(str(frame_path))
+        from panda3d.core import Filename
+        texture = app.loader.loadTexture(Filename.fromOsSpecific(str(frame_path)).getFullpath())
         if texture is None:
             continue
         texture.setWrapU(SamplerState.WM_clamp)
